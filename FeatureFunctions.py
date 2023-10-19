@@ -3,7 +3,7 @@ import re
 import numpy as np
 
 # create dictionary of dataframes of nuclei, cells and cytoplasm features
-def cp_MeanFeatures_extract(df_cp_results, OutputDir,plateNamePrefix):
+def cp_Features_extract(df_cp_results, OutputDir,plateNamePrefix):
     for index, oneplate_analysis in df_cp_results.iterrows():
         one_plate_filename = f'{ OutputDir }/{plateNamePrefix}_{ oneplate_analysis["plate_acq_name"] }.parquet'
         DataFrameDictionary ={}
@@ -38,7 +38,7 @@ def rename_elements(df,one_plate_filename,aggregateFunction):
     dictOfnumericColsAggregationFunctions = { i : aggregateFunction for i in numeric_columns}
     groupedbyImage = df.groupby(['ImageID','Metadata_Barcode','Metadata_Well', 'Metadata_Site','Metadata_AcqID'], as_index=False).agg(dictOfnumericColsAggregationFunctions)
     groupedbyImage.to_parquet( one_plate_filename )
-
+    
 
 
 def Group_Images_AllPlates(df_cp_results,OutputDir,plateNamePrefix):
